@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>V-Secure Bank ATM</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:
+    radial-gradient(circle at top,#173b5e,#07111d 55%,#02070c);
+    color:white;
+}
+
+.atm{
+    width:400px;
+    max-width:94%;
+    background:linear-gradient(145deg,#14283b,#0a1521);
+    border:2px solid #29445d;
+    border-radius:28px;
+    padding:22px;
+    box-shadow:
+    0 25px 70px rgba(0,0,0,.7),
+    inset 0 0 25px rgba(255,255,255,.02);
+}
+
+/* HEADER */
+
+.header{
+    text-align:center;
+    padding-bottom:18px;
+    border-bottom:1px solid #29445d;
+}
+
+.logo{
+    width:58px;
+    height:58px;
+    margin:auto;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:linear-gradient(
+        135deg,
+        #00c6ff,
+        #0072ff
+    );
+
+    font-size:27px;
+    font-weight:bold;
+
+    box-shadow:
+    0 0 25px rgba(0,198,255,.45);
+}
+
+.header h1{
+    margin-top:10px;
+    font-size:23px;
+    letter-spacing:1px;
+}
+
+.header p{
+    color:#8da8c0;
+    font-size:12px;
+    margin-top:5px;
+}
+
+/* SCREEN */
+
+.screen{
+    margin-top:20px;
+
+    background:
+    linear-gradient(
+        145deg,
+        #08131e,
+        #0c1d2b
+    );
+
+    border:1px solid #29445d;
+    border-radius:17px;
+
+    padding:20px;
+
+    min-height:390px;
+}
+
+.screen h2{
+    text-align:center;
+    color:#00c6ff;
+    margin-bottom:20px;
+    font-size:20px;
+}
+
+/* INPUT */
+
+.input{
+    width:100%;
+    padding:14px;
+    margin:8px 0;
+
+    border:none;
+    outline:none;
+
+    border-radius:10px;
+
+    background:#162b3e;
+    color:white;
+
+    font-size:15px;
+
+    border:1px solid #29445d;
+}
+
+.input:focus{
+    border-color:#00c6ff;
+    box-shadow:0 0 10px rgba(0,198,255,.15);
+}
+
+/* BUTTON */
+
+.btn{
+    width:100%;
+
+    padding:13px;
+
+    margin-top:10px;
+
+    border:none;
+    border-radius:10px;
+
+    cursor:pointer;
+
+    color:white;
+
+    font-size:14px;
+    font-weight:bold;
+
+    background:
+    linear-gradient(
+        90deg,
+        #0066ff,
+        #00c6ff
+    );
+
+    transition:.25s;
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+    0 8px 22px rgba(0,198,255,.25);
+}
+
+.btn:active{
+    transform:scale(.98);
+}
+
+/* BALANCE */
+
+.balance{
+    text-align:center;
+
+    background:
+    linear-gradient(
+        135deg,
+        #102c42,
+        #0d1e2e
+    );
+
+    padding:20px;
+
+    border-radius:15px;
+
+    margin-bottom:16px;
+
+    border:1px solid #25445d;
+}
+
+.balance small{
+    color:#8fa8bd;
+    font-size:11px;
+}
+
+.balance h1{
+    margin-top:8px;
+
+    color:#00e0ff;
+
+    font-size:29px;
+}
+
+/* MENU */
+
+.menu{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.menu .btn{
+    min-height:55px;
+}
+
+/* MESSAGE */
+
+.message{
+    text-align:center;
+
+    margin-top:16px;
+
+    color:#9eb4c8;
+
+    font-size:13px;
+
+    line-height:1.6;
+}
+
+/* HISTORY */
+
+.history{
+    max-height:190px;
+    overflow-y:auto;
+}
+
+.transaction{
+    padding:12px;
+
+    margin:7px 0;
+
+    border-radius:9px;
+
+    background:#142a3c;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    font-size:13px;
+}
+
+.credit{
+    color:#2de88d;
+}
+
+.debit{
+    color:#ff6878;
+}
+
+/* HIDDEN */
+
+.hidden{
+    display:none;
+}
+
+/* DEMO INFO */
+
+.demo{
+    margin-top:15px;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    background:#102639;
+
+    color:#91abc0;
+
+    font-size:12px;
+
+    text-align:center;
+
+    line-height:1.7;
+}
+
+/* FOOTER */
+
+.footer{
+    text-align:center;
+
+    color:#617b91;
+
+    font-size:10px;
+
+    margin-top:15px;
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="atm">
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div class="logo">
+            ₹
+        </div>
+
+        <h1>
+            V-SECURE BANK
+        </h1>
+
+        <p>
+            SMART ATM BANKING SYSTEM
+        </p>
+
+    </div>
+
+
+    <!-- ================= LOGIN ================= -->
+
+    <div
+        class="screen"
+        id="loginScreen"
+    >
+
+        <h2>
+            🔐 ATM LOGIN
+        </h2>
+
+
+        <input
+            type="text"
+            id="account"
+            class="input"
+            placeholder="Enter Account Number"
+            maxlength="10"
+        >
+
+
+        <input
+            type="password"
+            id="pin"
+            class="input"
+            placeholder="Enter 4 Digit PIN"
+            maxlength="4"
+        >
+
+
+        <button
+            class="btn"
+            onclick="login()"
+        >
+            LOGIN
+        </button>
+
+
+        <div
+            class="demo"
+        >
+
+            <b>Demo Accounts</b><br>
+
+            1234567890 / 1234<br>
+            9876543210 / 5678<br>
+            5555555555 / 1111<br>
+            1111222233 / 2222
+
+        </div>
+
+
+        <div
+            class="message"
+            id="loginMessage"
+        >
+            Enter your account details
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= ATM MENU ================= -->
+
+    <div
+        class="screen hidden"
+        id="menuScreen"
+    >
+
+        <h2 id="welcome">
+            WELCOME
+        </h2>
+
+
+        <div class="balance">
+
+            <small>
+                AVAILABLE BALANCE
+            </small>
+
+            <h1>
+                ₹
+                <span id="balance">
+                    0
+                </span>
+            </h1>
+
+        </div>
+
+
+        <div class="menu">
+
+            <button
+                class="btn"
+                onclick="showBalance()"
+            >
+                💰 Balance
+            </button>
+
+
+            <button
+                class="btn"
+                onclick="withdraw()"
+            >
+                💸 Withdraw
+            </button>
+
+
+            <button
+                class="btn"
+                onclick="deposit()"
+            >
+                💵 Deposit
+            </button>
+
+
+            <button
+                class="btn"
+                onclick="showHistory()"
+            >
+                📜 History
+            </button>
+
+
+            <button
+                class="btn"
+                onclick="logout()"
+            >
+                🚪 Logout
+            </button>
+
+        </div>
+
+
+        <div
+            class="message"
+            id="output"
+        >
+            Select an option
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= HISTORY ================= -->
+
+    <div
+        class="screen hidden"
+        id="historyScreen"
+    >
+
+        <h2>
+            📜 TRANSACTION HISTORY
+        </h2>
+
+
+        <div
+            class="history"
+            id="history"
+        >
+        </div>
+
+
+        <button
+            class="btn"
+            onclick="backMenu()"
+        >
+            ← BACK TO MENU
+        </button>
+
+    </div>
+
+
+    <div class="footer">
+
+        © 2026 V-Secure Bank
+        <br>
+        Demo ATM Banking System
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+/* =========================================
+   MULTIPLE ACCOUNTS
+========================================= */
+
+let accounts = {
+
+    "1234567890": {
+
+        name:"Vivek Vala",
+
+        pin:"1234",
+
+        balance:25000,
+
+        transactions:[
+
+            {
+                type:"credit",
+                text:"Account Opening",
+                amount:"+ ₹25,000"
+            }
+
+        ]
+
+    },
+
+
+    "9876543210": {
+
+        name:"Rahul Patel",
+
+        pin:"5678",
+
+        balance:40000,
+
+        transactions:[
+
+            {
+                type:"credit",
+                text:"Salary Credit",
+                amount:"+ ₹40,000"
+            }
+
+        ]
+
+    },
+
+
+    "5555555555": {
+
+        name:"Jay Shah",
+
+        pin:"1111",
+
+        balance:15000,
+
+        transactions:[
+
+            {
+                type:"credit",
+                text:"Initial Deposit",
+                amount:"+ ₹15,000"
+            }
+
+        ]
+
+    },
+
+
+    "1111222233": {
+
+        name:"Krisha Patel",
+
+        pin:"2222",
+
+        balance:65000,
+
+        transactions:[
+
+            {
+                type:"credit",
+                text:"Account Opening",
+                amount:"+ ₹65,000"
+            }
+
+        ]
+
+    }
+
+};
+
+
+
+/* CURRENT USER */
+
+let currentAccount = null;
+
+
+
+/* =========================================
+   LOGIN
+========================================= */
+
+function login(){
+
+    let accountNumber =
+        document
+        .getElementById("account")
+        .value
+        .trim();
+
+
+    let pin =
+        document
+        .getElementById("pin")
+        .value
+        .trim();
+
+
+    let account =
+        accounts[accountNumber];
+
+
+    if(
+        account &&
+        account.pin === pin
+    ){
+
+        currentAccount =
+            account;
+
+
+        document
+        .getElementById("loginScreen")
+        .classList
+        .add("hidden");
+
+
+        document
+        .getElementById("menuScreen")
+        .classList
+        .remove("hidden");
+
+
+        document
+        .getElementById("welcome")
+        .innerText =
+        "WELCOME, " +
+        account.name;
+
+
+        updateBalance();
+
+
+        document
+        .getElementById("output")
+        .innerHTML =
+        "✅ Login Successful<br>" +
+        "Welcome to V-Secure Bank";
+
+    }
+
+    else{
+
+        document
+        .getElementById("loginMessage")
+        .innerHTML =
+        "❌ Invalid Account Number or PIN";
+
+    }
+
+}
+
+
+
+/* =========================================
+   UPDATE BALANCE
+========================================= */
+
+function updateBalance(){
+
+    document
+    .getElementById("balance")
+    .innerText =
+    currentAccount
+    .balance
+    .toLocaleString();
+
+}
+
+
+
+/* =========================================
+   SHOW BALANCE
+========================================= */
+
+function showBalance(){
+
+    document
+    .getElementById("output")
+    .innerHTML =
+
+    "💰 Current Balance<br>" +
+
+    "<b>₹" +
+
+    currentAccount
+    .balance
+    .toLocaleString() +
+
+    "</b>";
+
+}
+
+
+
+/* =========================================
+   WITHDRAW
+========================================= */
+
+function withdraw(){
+
+    let amount =
+        Number(
+            prompt(
+                "Enter withdrawal amount:"
+            )
+        );
+
+
+    if(
+        !amount ||
+        amount <= 0
+    ){
+
+        alert(
+            "Please enter a valid amount."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        amount >
+        currentAccount.balance
+    ){
+
+        alert(
+            "❌ Insufficient Balance"
+        );
+
+        return;
+
+    }
+
+
+    if(
+        amount % 100 !== 0
+    ){
+
+        alert(
+            "Amount must be a multiple of ₹100."
+        );
+
+        return;
+
+    }
+
+
+    currentAccount.balance -=
+        amount;
+
+
+    currentAccount.transactions.push({
+
+        type:"debit",
+
+        text:"Cash Withdrawal",
+
+        amount:
+        "- ₹" +
+        amount.toLocaleString()
+
+    });
+
+
+    updateBalance();
+
+
+    document
+    .getElementById("output")
+    .innerHTML =
+
+    "✅ Withdrawal Successful<br>" +
+
+    "Amount: ₹" +
+
+    amount.toLocaleString() +
+
+    "<br>Please collect your cash.";
+
+}
+
+
+
+/* =========================================
+   DEPOSIT
+========================================= */
+
+function deposit(){
+
+    let amount =
+        Number(
+            prompt(
+                "Enter deposit amount:"
+            )
+        );
+
+
+    if(
+        !amount ||
+        amount <= 0
+    ){
+
+        alert(
+            "Please enter a valid amount."
+        );
+
+        return;
+
+    }
+
+
+    currentAccount.balance +=
+        amount;
+
+
+    currentAccount.transactions.push({
+
+        type:"credit",
+
+        text:"Cash Deposit",
+
+        amount:
+        "+ ₹" +
+        amount.toLocaleString()
+
+    });
+
+
+    updateBalance();
+
+
+    document
+    .getElementById("output")
+    .innerHTML =
+
+    "✅ Deposit Successful<br>" +
+
+    "Amount: ₹" +
+
+    amount.toLocaleString();
+
+}
+
+
+
+/* =========================================
+   TRANSACTION HISTORY
+========================================= */
+
+function showHistory(){
+
+    document
+    .getElementById("menuScreen")
+    .classList
+    .add("hidden");
+
+
+    document
+    .getElementById("historyScreen")
+    .classList
+    .remove("hidden");
+
+
+    let history =
+        document
+        .getElementById("history");
+
+
+    history.innerHTML = "";
+
+
+    let transactions =
+        currentAccount
+        .transactions
+        .slice()
+        .reverse();
+
+
+    if(
+        transactions.length === 0
+    ){
+
+        history.innerHTML =
+        "<p style='text-align:center'>" +
+        "No transactions found" +
+        "</p>";
+
+        return;
+
+    }
+
+
+    transactions.forEach(
+
+        function(item){
+
+            history.innerHTML += `
+
+                <div class="transaction">
+
+                    <span>
+                        ${item.text}
+                    </span>
+
+                    <b
+                        class="${item.type}"
+                    >
+                        ${item.amount}
+                    </b>
+
+                </div>
+
+            `;
+
+        }
+
+    );
+
+}
+
+
+
+/* =========================================
+   BACK TO MENU
+========================================= */
+
+function backMenu(){
+
+    document
+    .getElementById("historyScreen")
+    .classList
+    .add("hidden");
+
+
+    document
+    .getElementById("menuScreen")
+    .classList
+    .remove("hidden");
+
+}
+
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+function logout(){
+
+    currentAccount = null;
+
+
+    document
+    .getElementById("menuScreen")
+    .classList
+    .add("hidden");
+
+
+    document
+    .getElementById("historyScreen")
+    .classList
+    .add("hidden");
+
+
+    document
+    .getElementById("loginScreen")
+    .classList
+    .remove("hidden");
+
+
+    document
+    .getElementById("account")
+    .value = "";
+
+
+    document
+    .getElementById("pin")
+    .value = "";
+
+
+    document
+    .getElementById("loginMessage")
+    .innerHTML =
+    "Enter your account details";
+
+}
+
+</script>
+
+</body>
+</html>
